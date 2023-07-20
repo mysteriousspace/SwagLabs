@@ -1,12 +1,8 @@
 package com.example.testik;
-
-import com.codeborne.selenide.CollectionCondition;
 import com.codeborne.selenide.Configuration;
-import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.logevents.SelenideLogger;
 import io.qameta.allure.selenide.AllureSelenide;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -18,12 +14,11 @@ import static org.testng.Assert.assertEquals;
 
 public class UITest {
 
+
     private final static String BASE_URL = ("https://www.saucedemo.com/");
     private final static String USER = ("standard_user");
     private final static String PASS = ("secret_sauce");
-    public static String FirstName = ("Георгий");
-    public static String LastName = ("Жигарев");
-    public static String ZipPostalCode = ("156000");
+
     LoginPage loginPage = new LoginPage();
     ProductPage productPage = new ProductPage();
     CartPage cartPage = new CartPage();
@@ -41,23 +36,32 @@ public class UITest {
         open(BASE_URL);
     }
 
-    @Test /*Проверка авторизации*/
-    public void loginIn() {
-        assertTrue(loginPage.UserNameField.exists(), "Элемент не найден на странице");
-        assertTrue(loginPage.PasswordField.exists(), "Элемент не найден на странице");
-        assertTrue(loginPage.LoginButton.exists(), "Элемент не найден на странице");
-        loginPage.UserNameField.sendKeys(USER);
-        assertEquals(USER, loginPage.UserNameField.getValue(), "Логин не соответствует введенному значению");
-        loginPage.PasswordField.sendKeys(PASS);
-        assertEquals(PASS, loginPage.PasswordField.getValue(), "Пароль не соответствует введенному значению");
-        loginPage.LoginButton.click();
-        assertTrue(productPage.ProductHeader.exists(), "Элемент не найден на странице");
-        assertEquals(productPage.ProductHeader.getText(), "Products", "Значение атрибута элемента неверное");
-        assertEquals(url(), "https://www.saucedemo.com/inventory.html", "URL не соответствует ожидаемому результату");
+    @Test(description = "Проверка авторизации")
+    public void LoginIn() {
+        assertTrue(loginPage.openUrl(BASE_URL), "Элемент(ы) не найден(ы) на странице");
+        assertEquals(USER, loginPage.setName(USER), "Логин не соответствует введенному значению");
+        assertEquals(PASS, loginPage.setPasswordField(PASS), "Пароль не соответствует введенному значению");
+        assertTrue(loginPage.openStartPage(), "Не отображается страница Products");
     }
-
-    @Test /*Добавление товара в корзину*/
+    @Test(description = "Добавление товара в корзину")
     public void getProductsInBasket(){
+        loginPage.loginInOnStartPage(USER, PASS);
+        assertTrue(productPage.addBackpackInCart(), "Кнопка Add to cart не поменялась на кнопку Remove");
+        assertTrue(productPage.cartBadgeNumber(), "У иконки корзины не появился номер 1");
+        assertTrue(cartPage.openCartPageGetInfoItem(), "Название товара и цена не соответствуют выбранному");
+        assertTrue(cartPage.continueShoppingOnProduct(), "Не осуществляется переход на страницу Products");
+    }
+    @Test(description = "Добавление товара в корзину")
+    public void productClearance(){
+        loginPage.loginInOnStartPage(USER,PASS);
+        productPage.getSauceLabsBackpackInCart();
+        assertTrue(checkoutPage.openFormYourInformation(), "Некорректно отображается форма Your information");
+        assertTrue(checkoutPage.fillingFeildYourInformation(), "Не отображаются введенные значения");
+    }
+}
+
+   /* @Test /*Добавление товара в корзину*/
+   /* public void getProductsInBasket(){
         loginPage.LoginOnStartPage(USER, PASS);
         productPage.InventoryItemSauceLabsBackpack.click();
         String NameItem = productPage.ProductName.getText();
@@ -79,7 +83,7 @@ public class UITest {
     }
 
     @Test() /*Оформение товара*/
-    public void productClearance() {
+    /*public void productClearance() {
         loginPage.LoginOnStartPage(USER, PASS);
         productPage.getSauceLabsBackpackInCart();
         productPage.ShoppingCart.click();
@@ -107,7 +111,7 @@ public class UITest {
     }
 
     @Test /*Удаление товара из корзины*/
-    public void deleteProductFromCart(){
+   /* public void deleteProductFromCart(){
         loginPage.LoginOnStartPage(USER, PASS);
         productPage.InventoryItemSauceLabsBackpack.click();
         String NameItem = productPage.ProductName.getText();
@@ -132,4 +136,4 @@ public class UITest {
         assertEquals(url(), "https://www.saucedemo.com/inventory.html", "URL не соответствует ожидаемому результату");
     }
 
-}
+}*/
