@@ -9,7 +9,7 @@ public class ProductsElement {
     public SelenideElement inventoryItemSauceLabsBackpack = $x("//*[@class='inventory_item_name' and contains (text(), 'Sauce Labs Backpack')]");
     public SelenideElement addToCartButton = $("#add-to-cart-sauce-labs-backpack");
     public SelenideElement removeFromCart = $("#remove-sauce-labs-backpack");
-    public SelenideElement addSauceLabsBackpack= $("#add-to-cart-sauce-labs-backpack");
+    public SelenideElement addSauceLabsBackpack = $("#add-to-cart-sauce-labs-backpack");
     public SelenideElement removeSauceLabsBackpack = $("#remove-sauce-labs-backpack");
     public SelenideElement removeSauceLabsBikeLight = $("#remove-sauce-labs-bike-light");
     public SelenideElement removeSauceLabsBoltTshirt = $("#remove-sauce-labs-bolt-t-shirt");

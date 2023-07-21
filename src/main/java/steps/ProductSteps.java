@@ -3,45 +3,21 @@ package steps;
 import io.qameta.allure.Step;
 import pages.ProductPage;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+
 public class ProductSteps {
     ProductPage productPage = new ProductPage();
+
     @Step("Проверка изменения кнопки на Remove")
-    public boolean addBackpackInCart(){
+    public void addBackpackInCart() {
         productPage.productsElement.addSauceLabsBackpack.click();
-        if(productPage.productsElement.removeSauceLabsBackpack.exists()){
-            return true;
-        }
-        return false;
+        assertThat(productPage.productsElement.removeSauceLabsBackpack.exists()).as("Кнопка Remove не отображается").isTrue();
     }
 
-    public boolean cartBadgeNumber(){
-        if (productPage.productsElement.shoppingBadge.exists()){
-            String Badge = productPage.productsElement.shoppingBadge.getText();
-            if(Badge.equals("1")){
-                return true;
-            }
-        }
-        return false;
-    }
-
-
-    public void getSauceLabsBackpackInCart(){
-        if (productPage.productsElement.removeSauceLabsBackpack.exists()){
-            productPage.productsElement.removeSauceLabsBackpack.click();
-        } else if (productPage.productsElement.removeSauceLabsBikeLight.exists()){
-            productPage.productsElement.removeSauceLabsBikeLight.click();
-        } else if (productPage.productsElement.removeSauceLabsBoltTshirt.exists()) {
-            productPage.productsElement.removeSauceLabsBoltTshirt.click();
-        } else if (productPage.productsElement.removeSauceLabsFleeceJacket.exists()){
-            productPage.productsElement.removeSauceLabsFleeceJacket.click();
-        } else if (productPage.productsElement.removeSauceLabsOnesie.exists()) {
-            productPage.productsElement.removeSauceLabsOnesie.click();
-        } else if (productPage.productsElement.removeSauceLabsBoltTshirtRed.exists()){
-            productPage.productsElement.removeSauceLabsBoltTshirtRed.click();
-        } else {}
-        productPage.productsElement.inventoryItemSauceLabsBackpack.click();
-        productPage.productsElement.addToCartButton.click();
-        productPage.productsElement.shoppingCart.click();
+    @Step
+    public void cartBadgeNumber() {
+        assertThat(productPage.productsElement.shoppingBadge.exists()).as("Не отображается бейдж указывающий количество товара в корзине").isTrue();
+        assertThat(productPage.productsElement.shoppingBadge.getText()).as("Количество товара в корзине не соответствует ожидаемому").isEqualTo("1");
     }
 }
 

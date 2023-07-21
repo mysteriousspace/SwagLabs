@@ -11,33 +11,27 @@ public class LoginPageSteps {
     ProductPage productPage = new ProductPage();
 
     @Step("open URL")
-    public void openLoginForm (){
-         assertThat((loginPage.loginElements.LoginButton.exists()) && (loginPage.loginElements.PasswordField.exists()) && (loginPage.loginElements.LoginButton.exists()))
-                .isEqualTo(true);
+    public void openLoginForm() {
+        assertThat(loginPage.loginElements.userNameField.exists()).as("Поле username не найдено").isTrue();
+        assertThat(loginPage.loginElements.passwordField.exists()).as("Поле password не найдено").isTrue();
+        assertThat(loginPage.loginElements.loginButton.exists()).as("Кнопка логин не найдена").isTrue();
     }
 
-    @Step ("Заполнение логина")
-    public void setName (String a){
-        loginPage.loginElements.UserNameField.sendKeys(a);
-        assertThat(loginPage.loginElements.UserNameField.getValue()).isEqualTo(a);
+    @Step("Заполнение логина")
+    public void setName(String a) {
+        loginPage.loginElements.userNameField.sendKeys(a);
+        assertThat(loginPage.loginElements.userNameField.getValue()).as("Введеное значение не отображается").isEqualTo(a);
     }
 
-    @Step ("Заполнение пароля")
-    public void setPasswordField(String b){
-        loginPage.loginElements.PasswordField.sendKeys(b);
-        assertThat(loginPage.loginElements.PasswordField.getValue()).isEqualTo(b);
+    @Step("Заполнение пароля")
+    public void setPasswordField(String b) {
+        loginPage.loginElements.passwordField.sendKeys(b);
+        assertThat(loginPage.loginElements.passwordField.getValue()).as("Введеное значение не отображается").isEqualTo(b);
     }
 
-    @Step ("Нажатие на кнопку Логин")
-    public void openStartPage(){
-        loginPage.loginElements.LoginButton.click();
-        assertThat(productPage.productsElement.productHeader.exists()).isEqualTo(true);
-    }
-
-    /*Метод авторизации*/
-    public void loginInOnStartPage(String a, String b){
-        loginPage.loginElements.UserNameField.sendKeys(a);
-        loginPage.loginElements.PasswordField.sendKeys(b);
-        loginPage.loginElements.LoginButton.click();
+    @Step("Нажатие на кнопку Логин")
+    public void openStartPage() {
+        loginPage.loginElements.loginButton.click();
+        assertThat(productPage.productsElement.productHeader.exists()).as("Страница Products не открывается").isTrue();
     }
 }
