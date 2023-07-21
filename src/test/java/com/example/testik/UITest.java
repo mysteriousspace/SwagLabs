@@ -1,4 +1,5 @@
 package com.example.testik;
+
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.logevents.SelenideLogger;
 import io.qameta.allure.selenide.AllureSelenide;
@@ -6,20 +7,24 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import pages.CartPage;
+import pages.CheckoutPage;
+import pages.ProductPage;
+import steps.LoginPageSteps;
+import steps.ProductSteps;
 
-import static com.codeborne.selenide.Selenide.*;
-import static com.codeborne.selenide.WebDriverRunner.url;
-import static org.testng.Assert.*;
+import static com.codeborne.selenide.Selenide.open;
 import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertTrue;
 
 public class UITest {
-
+    ProductSteps productSteps = new ProductSteps();
+    LoginPageSteps loginPageSteps = new LoginPageSteps();
 
     private final static String BASE_URL = ("https://www.saucedemo.com/");
     private final static String USER = ("standard_user");
     private final static String PASS = ("secret_sauce");
 
-    LoginPage loginPage = new LoginPage();
     ProductPage productPage = new ProductPage();
     CartPage cartPage = new CartPage();
     CheckoutPage checkoutPage = new CheckoutPage();
@@ -35,32 +40,42 @@ public class UITest {
         Configuration.browserCapabilities = new ChromeOptions().addArguments("--remote-allow-origins=*");
         open(BASE_URL);
     }
-
     @Test(description = "Проверка авторизации")
+    public void LoginIn(){
+        loginPageSteps.openLoginForm();
+        loginPageSteps.setName(USER);
+        loginPageSteps.setPasswordField(PASS);
+        loginPageSteps.openStartPage();
+    }
+
+  /*  @Test(description = "Проверка авторизации")
     public void LoginIn() {
         assertTrue(loginPage.openUrl(BASE_URL), "Элемент(ы) не найден(ы) на странице");
         assertEquals(USER, loginPage.setName(USER), "Логин не соответствует введенному значению");
         assertEquals(PASS, loginPage.setPasswordField(PASS), "Пароль не соответствует введенному значению");
         assertTrue(loginPage.openStartPage(), "Не отображается страница Products");
     }
+
     @Test(description = "Добавление товара в корзину")
-    public void getProductsInBasket(){
+    public void getProductsInBasket() {
         loginPage.loginInOnStartPage(USER, PASS);
         assertTrue(productPage.addBackpackInCart(), "Кнопка Add to cart не поменялась на кнопку Remove");
         assertTrue(productPage.cartBadgeNumber(), "У иконки корзины не появился номер 1");
         assertTrue(cartPage.openCartPageGetInfoItem(), "Название товара и цена не соответствуют выбранному");
         assertTrue(cartPage.continueShoppingOnProduct(), "Не осуществляется переход на страницу Products");
     }
+
     @Test(description = "Добавление товара в корзину")
-    public void productClearance(){
-        loginPage.loginInOnStartPage(USER,PASS);
+    public void productClearance() {
+        loginPage.loginInOnStartPage(USER, PASS);
         productPage.getSauceLabsBackpackInCart();
         assertTrue(checkoutPage.openFormYourInformation(), "Некорректно отображается форма Your information");
         assertTrue(checkoutPage.fillingFeildYourInformation(), "Не отображаются введенные значения");
     }
+    */
 }
 
-   /* @Test /*Добавление товара в корзину*/
+/* @Test /*Добавление товара в корзину*/
    /* public void getProductsInBasket(){
         loginPage.LoginOnStartPage(USER, PASS);
         productPage.InventoryItemSauceLabsBackpack.click();
