@@ -2,10 +2,12 @@ package servise;
 
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.logevents.SelenideLogger;
+import io.qameta.allure.Step;
 import io.qameta.allure.selenide.AllureSelenide;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
 import pages.LoginPage;
 import pages.ProductPage;
 
@@ -14,9 +16,13 @@ import static com.codeborne.selenide.Selenide.open;
 public class BaseSteps {
     LoginPage loginPage = new LoginPage();
     ProductPage productPage = new ProductPage();
-    private final static String BASE_URL = ("https://www.saucedemo.com/");
-    private final static String USER = ("standard_user");
-    private final static String PASS = ("secret_sauce");
+    String BASE_URL = "https://www.saucedemo.com/";
+    String LOGIN = "standard_user";
+    String PASSWORD = "secret_sauce";
+    String getBaseUrl = ConfigProvider.URL;
+    String getLogin = ConfigProvider.LOGIN;
+    String getPassword = ConfigProvider.PASSWORD;
+
 
     @BeforeClass
     public static void setUpAll() {
@@ -27,12 +33,12 @@ public class BaseSteps {
     @BeforeMethod
     public void setUp() {
         Configuration.browserCapabilities = new ChromeOptions().addArguments("--remote-allow-origins=*");
-        open(BASE_URL);
+        open(getBaseUrl);
     }
 
     public void loginInOnStartPage() {
-        loginPage.loginElements.userNameField.sendKeys(USER);
-        loginPage.loginElements.passwordField.sendKeys(PASS);
+        loginPage.loginElements.userNameField.sendKeys(getLogin);
+        loginPage.loginElements.passwordField.sendKeys(getPassword);
         loginPage.loginElements.loginButton.click();
     }
 
