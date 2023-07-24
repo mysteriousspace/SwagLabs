@@ -10,7 +10,7 @@ public class LoginOnStartPage extends BaseSteps {
 
     LoginPageSteps loginPageSteps = new LoginPageSteps();
 
-    @Test
+    @Test(description = "")
     public void loginIn() {
         loginPageSteps.openLoginForm();
         loginPageSteps.setName(USER);

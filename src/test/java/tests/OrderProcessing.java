@@ -9,7 +9,7 @@ public class OrderProcessing extends BaseSteps {
     CheckoutSteps checkoutSteps = new CheckoutSteps();
 
     @Test(description = "Добавление товара в корзину")
-    public void productClearance(){
+    public void productClearance() {
         loginInOnStartPage();
         getSauceLabsBackpackInCart();
         checkoutSteps.openFormYourInformation();

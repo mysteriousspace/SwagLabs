@@ -8,8 +8,9 @@ import steps.ProductSteps;
 public class DeleteItemFromCart extends BaseSteps {
     ProductSteps productSteps = new ProductSteps();
     CartSteps cartSteps = new CartSteps();
-    @Test(description = "")
-    public void removeBackPackFromCart(){
+
+    @Test(description = "Удаление товара из корзины")
+    public void removeBackPackFromCart() {
         loginInOnStartPage();
         removeAllItemFromCart();
         productSteps.addBackpackInCart();

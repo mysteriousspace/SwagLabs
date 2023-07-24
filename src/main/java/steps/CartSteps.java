@@ -13,11 +13,11 @@ public class CartSteps {
     @Step("Открытие корзины")
     public void openCartPageGetInfoItem() {
         productPage.productsElement.inventoryItemSauceLabsBackpack.click();
-        String ItemName = productPage.inventoryItemElements.productName.getText();
-        String ItemPrice = productPage.inventoryItemElements.productPrice.getText();
+        String itemName = productPage.inventoryItemElements.productName.getText();
+        String itemPrice = productPage.inventoryItemElements.productPrice.getText();
         productPage.productsElement.shoppingCart.click();
-        assertThat(cartPage.cartElements.inventoryItemName.getText()).as("Наименование товара не соответствует выбранному значению").isEqualTo(ItemName);
-        assertThat(cartPage.cartElements.inventoryItemPrice.getText()).as("Цена товара не соответствует выбранному значению").isEqualTo(ItemPrice);
+        assertThat(cartPage.cartElements.inventoryItemName.getText()).as("Наименование товара не соответствует выбранному значению").isEqualTo(itemName);
+        assertThat(cartPage.cartElements.inventoryItemPrice.getText()).as("Цена товара не соответствует выбранному значению").isEqualTo(itemPrice);
     }
 
     @Step("Возвращение на страницу продуктов")
@@ -27,9 +27,9 @@ public class CartSteps {
     }
 
     @Step("Нажать на кнопку Remove")
-    public void removeBackPack(){
+    public void removeBackPack() {
         cartPage.cartElements.removeFromCartBackPack.click();
-        assertThat((cartPage.cartElements.inventoryItemName.exists()) &&(cartPage.cartElements.inventoryItemPrice.exists()))
+        assertThat((cartPage.cartElements.inventoryItemName.exists()) && (cartPage.cartElements.inventoryItemPrice.exists()))
                 .as("Товар отображается в корзине").isFalse();
         assertThat(productPage.productsElement.shoppingBadge.exists()).as("У корзины не пропал номер").isFalse();
     }

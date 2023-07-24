@@ -9,6 +9,7 @@ import org.testng.annotations.BeforeMethod;
 import pages.LoginPage;
 import pages.ProductPage;
 
+import static com.codeborne.selenide.Condition.exactText;
 import static com.codeborne.selenide.Selenide.open;
 
 public class BaseSteps {
@@ -38,22 +39,24 @@ public class BaseSteps {
     }
 
     public void getSauceLabsBackpackInCart() {
-        if (productPage.productsElement.removeSauceLabsBackpack.exists()) {
-            productPage.productsElement.removeSauceLabsBackpack.click();
-        } else if (productPage.productsElement.removeSauceLabsBikeLight.exists()) {
-            productPage.productsElement.removeSauceLabsBikeLight.click();
-        } else if (productPage.productsElement.removeSauceLabsBoltTshirt.exists()) {
-            productPage.productsElement.removeSauceLabsBoltTshirt.click();
-        } else if (productPage.productsElement.removeSauceLabsFleeceJacket.exists()) {
-            productPage.productsElement.removeSauceLabsFleeceJacket.click();
-        } else if (productPage.productsElement.removeSauceLabsOnesie.exists()) {
-            productPage.productsElement.removeSauceLabsOnesie.click();
-        } else if (productPage.productsElement.removeSauceLabsBoltTshirtRed.exists()) {
-            productPage.productsElement.removeSauceLabsBoltTshirtRed.click();
-        }
+        cycleForPasha();
         productPage.productsElement.inventoryItemSauceLabsBackpack.click();
         productPage.productsElement.addToCartButton.click();
         productPage.productsElement.shoppingCart.click();
+    }
+
+
+    // цикл и коллекция
+    public void cycleForPasha() {
+        while (productPage.productsElement.removeFromCart.exists()) {
+            productPage.productsElement.removeFromCart.click();
+        }
+    }
+
+    public void collectionForPasha() {
+        if (productPage.productsElement.itemList.findBy(exactText("Remove")).exists()) {
+            productPage.productsElement.itemList.findBy(exactText("Remove")).click();
+        }
     }
 
     public void removeAllItemFromCart() {
