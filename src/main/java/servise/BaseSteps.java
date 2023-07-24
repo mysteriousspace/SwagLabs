@@ -30,7 +30,7 @@ public class BaseSteps {
         open(BASE_URL);
     }
 
-    public void loginInOnStartPage(){
+    public void loginInOnStartPage() {
         loginPage.loginElements.userNameField.sendKeys(USER);
         loginPage.loginElements.passwordField.sendKeys(PASS);
         loginPage.loginElements.loginButton.click();
@@ -53,5 +53,21 @@ public class BaseSteps {
         productPage.productsElement.inventoryItemSauceLabsBackpack.click();
         productPage.productsElement.addToCartButton.click();
         productPage.productsElement.shoppingCart.click();
+    }
+
+    public void removeAllItemFromCart() {
+        if (productPage.productsElement.removeSauceLabsBackpack.exists()) {
+            productPage.productsElement.removeSauceLabsBackpack.click();
+        } else if (productPage.productsElement.removeSauceLabsBikeLight.exists()) {
+            productPage.productsElement.removeSauceLabsBikeLight.click();
+        } else if (productPage.productsElement.removeSauceLabsBoltTshirt.exists()) {
+            productPage.productsElement.removeSauceLabsBoltTshirt.click();
+        } else if (productPage.productsElement.removeSauceLabsFleeceJacket.exists()) {
+            productPage.productsElement.removeSauceLabsFleeceJacket.click();
+        } else if (productPage.productsElement.removeSauceLabsOnesie.exists()) {
+            productPage.productsElement.removeSauceLabsOnesie.click();
+        } else if (productPage.productsElement.removeSauceLabsBoltTshirtRed.exists()) {
+            productPage.productsElement.removeSauceLabsBoltTshirtRed.click();
+        }
     }
 }

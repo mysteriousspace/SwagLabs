@@ -25,4 +25,12 @@ public class CartSteps {
         cartPage.cartElements.continueShoppingButton.click();
         assertThat(productPage.productsElement.productHeader.exists()).as("Страница Products не открывается").isTrue();
     }
+
+    @Step("Нажать на кнопку Remove")
+    public void removeBackPack(){
+        cartPage.cartElements.removeFromCartBackPack.click();
+        assertThat((cartPage.cartElements.inventoryItemName.exists()) &&(cartPage.cartElements.inventoryItemPrice.exists()))
+                .as("Товар отображается в корзине").isFalse();
+        assertThat(productPage.productsElement.shoppingBadge.exists()).as("У корзины не пропал номер").isFalse();
+    }
 }
