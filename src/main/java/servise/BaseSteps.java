@@ -16,9 +16,6 @@ import static com.codeborne.selenide.Selenide.open;
 public class BaseSteps {
     LoginPage loginPage = new LoginPage();
     ProductPage productPage = new ProductPage();
-    String BASE_URL = "https://www.saucedemo.com/";
-    String LOGIN = "standard_user";
-    String PASSWORD = "secret_sauce";
     String getBaseUrl = ConfigProvider.URL;
     String getLogin = ConfigProvider.LOGIN;
     String getPassword = ConfigProvider.PASSWORD;
