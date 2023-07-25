@@ -46,7 +46,6 @@ public class BaseSteps {
     }
 
 
-    // цикл и коллекция
     public void cycleForPasha() {
         while (productPage.productsElement.removeFromCart.exists()) {
             productPage.productsElement.removeFromCart.click();

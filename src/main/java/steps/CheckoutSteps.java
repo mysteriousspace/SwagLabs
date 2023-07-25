@@ -1,5 +1,6 @@
 package steps;
 
+import com.codeborne.selenide.Condition;
 import io.qameta.allure.Step;
 import pages.CartPage;
 import pages.CheckoutPage;
@@ -20,6 +21,13 @@ public class CheckoutSteps {
         assertThat(checkoutPage.checkoutElements.firstNameField.exists()).as("Поле FirstName не найдено").isTrue();
         assertThat(checkoutPage.checkoutElements.lastNameField.exists()).as("Поле LastName не найдено").isTrue();
         assertThat(checkoutPage.checkoutElements.zipPostalCodeField.exists()).as("Поле ZipPostalCode не найдено").isTrue();
+    }
+
+    public void openFormYour() {
+        cartPage.cartElements.checkoutButton.click();
+        assertThat(checkoutPage.checkoutElements.yourInformationForm.findBy(Condition.name("firstName")).exists()).as("Поле FirstName не найдено").isTrue();
+        assertThat(checkoutPage.checkoutElements.yourInformationForm.findBy(Condition.name("lastName")).exists()).as("Поле LastName не найдено").isTrue();
+        assertThat(checkoutPage.checkoutElements.yourInformationForm.findBy(Condition.name("postalCode")).exists()).as("Поле ZipPostalCode не найдено").isTrue();
     }
 
     @Step("Проверка заполнения полей")
