@@ -12,7 +12,6 @@ public class DeleteItemFromCart extends BaseSteps {
     @Test(description = "Удаление товара из корзины")
     public void removeBackPackFromCart() {
         loginInOnStartPage();
-        removeAllItemFromCart();
         productSteps.addBackpackInCart();
         cartSteps.openCartPageGetInfoItem();
         cartSteps.removeBackPack();

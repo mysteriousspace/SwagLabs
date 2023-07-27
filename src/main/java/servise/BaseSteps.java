@@ -8,12 +8,15 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import pages.LoginPage;
 import pages.ProductPage;
+import servise.WebDriver.BrowserSettings;
+
 import static com.codeborne.selenide.Condition.exactText;
 import static com.codeborne.selenide.Selenide.open;
 
 public class BaseSteps {
     LoginPage loginPage = new LoginPage();
     ProductPage productPage = new ProductPage();
+    BrowserSettings browserSettings = new BrowserSettings();
     String getBaseUrl = ConfigProvider.URL;
     String getLogin = ConfigProvider.LOGIN;
     String getPassword = ConfigProvider.PASSWORD;
@@ -21,13 +24,12 @@ public class BaseSteps {
 
     @BeforeClass
     public static void setUpAll() {
-        Configuration.browserSize = "1280x800";
         SelenideLogger.addListener("allure", new AllureSelenide());
     }
 
     @BeforeMethod
     public void setUp() {
-        Configuration.browserCapabilities = new ChromeOptions().addArguments("--remote-allow-origins=*");
+        BrowserSettings.chromeSettings();
         open(getBaseUrl);
     }
 
@@ -38,7 +40,6 @@ public class BaseSteps {
     }
 
     public void getSauceLabsBackpackInCart() {
-        cycleForPasha();
         productPage.productsElement.inventoryItemSauceLabsBackpack.click();
         productPage.productsElement.addToCartButton.click();
         productPage.productsElement.shoppingCart.click();
@@ -56,6 +57,7 @@ public class BaseSteps {
             productPage.productsElement.itemList.findBy(exactText("Remove")).click();
         }
     }
+
 
     public void removeAllItemFromCart() {
         if (productPage.productsElement.removeSauceLabsBackpack.exists()) {
