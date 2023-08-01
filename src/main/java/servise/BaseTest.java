@@ -37,7 +37,6 @@ public class BaseTest extends LocalWebDriverProvider {
     @BeforeMethod
     public void setUpAll() {
         Configuration.browserCapabilities = new ChromeOptions()
-                .addArguments("--incognito")
                 .addArguments("--window-size=1920,1080")
                 .addArguments("--disable-cache")
                 .addArguments("--disable-cookies");
