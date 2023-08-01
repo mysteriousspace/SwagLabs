@@ -3,33 +3,39 @@ package servise;
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.logevents.SelenideLogger;
 import io.qameta.allure.selenide.AllureSelenide;
+import org.openqa.selenium.Capabilities;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.remote.DesiredCapabilities;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import pages.LoginPage;
 import pages.ProductPage;
-import servise.WebDriver.BrowserSettings;
+import servise.WebDriver.LocalWebDriverProvider;
 
 import static com.codeborne.selenide.Condition.exactText;
+import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.open;
+import static com.codeborne.selenide.Selenide.webdriver;
 
-public class BaseSteps {
+public class BaseTest extends LocalWebDriverProvider{
     LoginPage loginPage = new LoginPage();
     ProductPage productPage = new ProductPage();
-    BrowserSettings browserSettings = new BrowserSettings();
+    LocalWebDriverProvider localWebDriverProvider = new LocalWebDriverProvider();
     String getBaseUrl = ConfigProvider.URL;
     String getLogin = ConfigProvider.LOGIN;
     String getPassword = ConfigProvider.PASSWORD;
 
 
     @BeforeClass
-    public static void setUpAll() {
+    public void setUp() {
         SelenideLogger.addListener("allure", new AllureSelenide());
     }
-
     @BeforeMethod
-    public void setUp() {
-        BrowserSettings.chromeSettings();
+    public void setUpAll() {
+        Configuration.browserCapabilities = new ChromeOptions().addArguments("--incognito").addArguments("--window-size=1920,1080");
         open(getBaseUrl);
     }
 
@@ -51,10 +57,10 @@ public class BaseSteps {
             productPage.productsElement.removeFromCart.click();
         }
     }
-
+    //Не нашел информации по коллекциям, как можно реализовать в одну строку
     public void collectionForPasha() {
-        if (productPage.productsElement.itemList.findBy(exactText("Remove")).exists()) {
-            productPage.productsElement.itemList.findBy(exactText("Remove")).click();
+        for (WebElement element: productPage.productsElement.itemListButton.filterBy(text("Remove"))){
+            element.click();
         }
     }
 

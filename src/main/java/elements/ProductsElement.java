@@ -19,5 +19,5 @@ public class ProductsElement {
     public SelenideElement shoppingCart = $(".shopping_cart_link");
     public SelenideElement shoppingBadge = $(".shopping_cart_badge");
     public SelenideElement productHeader = $x("//*[@class=\"title\" and contains(text(), 'Products')]");
-    public ElementsCollection itemList = $$(".inventory_item");
+    public ElementsCollection itemListButton = $$x("//div[@class='inventory_item']//button");
 }

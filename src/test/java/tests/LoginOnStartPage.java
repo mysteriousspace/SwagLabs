@@ -1,10 +1,10 @@
 package tests;
 
 import org.testng.annotations.Test;
-import servise.BaseSteps;
+import servise.BaseTest;
 import steps.LoginPageSteps;
 
-public class LoginOnStartPage extends BaseSteps {
+public class LoginOnStartPage extends BaseTest {
     private final static String USER = ("standard_user");
     private final static String PASS = ("secret_sauce");
 

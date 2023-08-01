@@ -1,11 +1,11 @@
 package tests;
 
 import org.testng.annotations.Test;
-import servise.BaseSteps;
+import servise.BaseTest;
 import steps.CartSteps;
 import steps.ProductSteps;
 
-public class DeleteItemFromCart extends BaseSteps {
+public class DeleteItemFromCart extends BaseTest {
     ProductSteps productSteps = new ProductSteps();
     CartSteps cartSteps = new CartSteps();
 

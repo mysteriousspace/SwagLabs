@@ -1,10 +1,10 @@
 package tests;
 
 import org.testng.annotations.Test;
-import servise.BaseSteps;
+import servise.BaseTest;
 import steps.CheckoutSteps;
 
-public class OrderProcessing extends BaseSteps {
+public class OrderProcessing extends BaseTest {
 
     CheckoutSteps checkoutSteps = new CheckoutSteps();
 
