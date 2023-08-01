@@ -3,27 +3,27 @@ package servise;
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.logevents.SelenideLogger;
 import io.qameta.allure.selenide.AllureSelenide;
-import org.openqa.selenium.Capabilities;
-import org.openqa.selenium.WebDriver;
+import org.aeonbits.owner.Config;
+import org.aeonbits.owner.ConfigFactory;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.remote.DesiredCapabilities;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import pages.LoginPage;
 import pages.ProductPage;
 import servise.WebDriver.LocalWebDriverProvider;
 
-import static com.codeborne.selenide.Condition.exactText;
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.open;
-import static com.codeborne.selenide.Selenide.webdriver;
 
-public class BaseTest extends LocalWebDriverProvider{
+public class BaseTest extends LocalWebDriverProvider {
     LoginPage loginPage = new LoginPage();
     ProductPage productPage = new ProductPage();
-    LocalWebDriverProvider localWebDriverProvider = new LocalWebDriverProvider();
+    TestConfig testConfig = ConfigFactory.create(TestConfig.class);
+    String propUrl = testConfig.url();
+    String propUser = testConfig.user();
+    String propPass = testConfig.password();
+
     String getBaseUrl = ConfigProvider.URL;
     String getLogin = ConfigProvider.LOGIN;
     String getPassword = ConfigProvider.PASSWORD;
@@ -33,19 +33,25 @@ public class BaseTest extends LocalWebDriverProvider{
     public void setUp() {
         SelenideLogger.addListener("allure", new AllureSelenide());
     }
+
     @BeforeMethod
     public void setUpAll() {
-        Configuration.browserCapabilities = new ChromeOptions().addArguments("--incognito").addArguments("--window-size=1920,1080");
-        open(getBaseUrl);
+        Configuration.browserCapabilities = new ChromeOptions()
+                .addArguments("--incognito")
+                .addArguments("--window-size=1920,1080")
+                .addArguments("--disable-cache")
+                .addArguments("--disable-cookies");
+        open(propUrl);
     }
 
     public void loginInOnStartPage() {
-        loginPage.loginElements.userNameField.sendKeys(getLogin);
-        loginPage.loginElements.passwordField.sendKeys(getPassword);
+        loginPage.loginElements.userNameField.sendKeys(propUser);
+        loginPage.loginElements.passwordField.sendKeys(propPass);
         loginPage.loginElements.loginButton.click();
     }
 
     public void getSauceLabsBackpackInCart() {
+        collectionForPasha();
         productPage.productsElement.inventoryItemSauceLabsBackpack.click();
         productPage.productsElement.addToCartButton.click();
         productPage.productsElement.shoppingCart.click();
@@ -57,9 +63,10 @@ public class BaseTest extends LocalWebDriverProvider{
             productPage.productsElement.removeFromCart.click();
         }
     }
+
     //Не нашел информации по коллекциям, как можно реализовать в одну строку
     public void collectionForPasha() {
-        for (WebElement element: productPage.productsElement.itemListButton.filterBy(text("Remove"))){
+        for (WebElement element : productPage.productsElement.itemListButton.filterBy(text("Remove"))) {
             element.click();
         }
     }
