@@ -4,7 +4,7 @@ import org.testng.annotations.Test;
 import servise.BaseTest;
 import steps.CheckoutSteps;
 
-public class OrderProcessing extends BaseTest {
+public class OrderProcessingTest extends BaseTest {
 
     CheckoutSteps checkoutSteps = new CheckoutSteps();
 

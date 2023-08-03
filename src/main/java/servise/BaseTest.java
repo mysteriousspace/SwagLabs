@@ -3,20 +3,17 @@ package servise;
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.logevents.SelenideLogger;
 import io.qameta.allure.selenide.AllureSelenide;
-import org.aeonbits.owner.Config;
 import org.aeonbits.owner.ConfigFactory;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeMethod;
 import pages.LoginPage;
 import pages.ProductPage;
-import servise.WebDriver.LocalWebDriverProvider;
 
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.open;
 
-public class BaseTest extends LocalWebDriverProvider {
+public class BaseTest {
     LoginPage loginPage = new LoginPage();
     ProductPage productPage = new ProductPage();
     TestConfig testConfig = ConfigFactory.create(TestConfig.class);
@@ -32,16 +29,23 @@ public class BaseTest extends LocalWebDriverProvider {
     @BeforeClass
     public void setUp() {
         SelenideLogger.addListener("allure", new AllureSelenide());
+        Configuration.browserCapabilities = new ChromeOptions()
+                .addArguments("--window-size=1920,1080")
+                .addArguments("--disable-cache")
+                .addArguments("--disable-cookies")
+                .addArguments("-incognito");
+        open(propUrl);
     }
 
-    @BeforeMethod
+   /* @BeforeMethod
     public void setUpAll() {
         Configuration.browserCapabilities = new ChromeOptions()
                 .addArguments("--window-size=1920,1080")
                 .addArguments("--disable-cache")
-                .addArguments("--disable-cookies");
+                .addArguments("--disable-cookies")
+                .addArguments("-incognito");
         open(propUrl);
-    }
+    }*/
 
     public void loginInOnStartPage() {
         loginPage.loginElements.userNameField.sendKeys(propUser);
@@ -50,7 +54,6 @@ public class BaseTest extends LocalWebDriverProvider {
     }
 
     public void getSauceLabsBackpackInCart() {
-        collectionForPasha();
         productPage.productsElement.inventoryItemSauceLabsBackpack.click();
         productPage.productsElement.addToCartButton.click();
         productPage.productsElement.shoppingCart.click();
