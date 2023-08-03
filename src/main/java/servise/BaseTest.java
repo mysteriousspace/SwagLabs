@@ -33,7 +33,14 @@ public class BaseTest {
                 .addArguments("--window-size=1920,1080")
                 .addArguments("--disable-cache")
                 .addArguments("--disable-cookies")
-                .addArguments("-incognito");
+                .addArguments("-incognito")
+                .addArguments("--incognito")
+                .addArguments("--disable-cache")
+                .addArguments("--disable-application-cache")
+                .addArguments("--disable-offline-load-stale-cache")
+                .addArguments("--clear-session-cache")
+                .addArguments("disable-gpu-shader-disk-cache")
+                .addArguments("disable-gpu-sandbox");
         open(propUrl);
     }
 
