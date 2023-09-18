@@ -26,10 +26,11 @@ public class BaseTest {
     String getPassword = ConfigProvider.PASSWORD;
 
 
-    @BeforeClass
+        @BeforeClass
     public void setUp() {
+        Configuration.browser = CustomChromeDriver.class.getCanonicalName();
         SelenideLogger.addListener("allure", new AllureSelenide());
-        Configuration.browserCapabilities = new ChromeOptions()
+        /*Configuration.browserCapabilities = new ChromeOptions()
                 .addArguments("--window-size=1920,1080")
                 .addArguments("--disable-cache")
                 .addArguments("--disable-cookies")
@@ -40,8 +41,17 @@ public class BaseTest {
                 .addArguments("--disable-offline-load-stale-cache")
                 .addArguments("--clear-session-cache")
                 .addArguments("disable-gpu-shader-disk-cache")
-                .addArguments("disable-gpu-sandbox");
+                .addArguments("disable-gpu-sandbox");*/
         open(propUrl);
+    }
+
+    /**
+     * Добавил закрытие вебдрайвера, чтобы открывалась для каждого теста новая страница,
+     * либо все параметры небудут действовать в рамках одной инициализации веб драйвера
+     */
+    @AfterClass
+    public void close() {
+        closeWebDriver();
     }
 
    /* @BeforeMethod
